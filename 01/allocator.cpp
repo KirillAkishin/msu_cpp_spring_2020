@@ -28,3 +28,8 @@ void reset(){
     ptrCurr = ptrStart;
     return;
 }
+
+void deleteAllocator(){
+    delete[] ptrStart;
+    return;
+}

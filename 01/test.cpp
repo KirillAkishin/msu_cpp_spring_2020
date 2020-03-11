@@ -41,6 +41,7 @@ int testCases(char * name){
         return testNumber;
     }
 
+    deleteAllocator();
     return 0;
 }
 
