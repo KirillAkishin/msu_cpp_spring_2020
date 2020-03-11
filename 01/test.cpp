@@ -41,6 +41,13 @@ int testCases(char * name){
         return testNumber;
     }
 
+    //T5 - memory overflow
+    testNumber++;
+    for (int i = 0; i < 100000000; i++){
+        ptr1 = alloc(1000000);
+        reset();
+    }
+
     return 0;
 }
 
