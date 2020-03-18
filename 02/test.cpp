@@ -4,7 +4,7 @@
 
 int testCases(char * name){
     int testNumber = 0;
-    const char * text = "TEST STRING: 1231 adsd 22wd  4\t 52d31231231231233!";
+    const char * text = "TEST STRING: 1231 adsd 22wd\n4\t 52d31231231231233!";
 
     //T1 - standart work
     testNumber++;
