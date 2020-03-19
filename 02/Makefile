@@ -11,7 +11,7 @@ parser.o: parser.cpp parser.h
 	$(CC) $(CFLAGS) -c parser.cpp
 
 clean:
-	rm -rf *.o $(NAME) test.exe
+	rm -rf *.o $(NAME) test.exe TEST_FILE.txt
 	
 test: $(NAME) test.exe
 	./test.exe $(NAME)

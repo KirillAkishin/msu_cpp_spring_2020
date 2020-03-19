@@ -1,10 +1,18 @@
 #include <iostream>
+#include <fstream>
+#include <string>
+#include <cstring>
+
 
 #include "parser.h"
 
 int testCases(char * name){
     int testNumber = 0;
     const char * text = "TEST STRING: 1231 adsd 22wd\n4\t 52d31231231231233!";
+    std::ofstream oFile ( "TEST_FILE.txt" ) ; 
+    std::string textFromFile;
+    std::string line;
+    std::ifstream fin;
 
     //T1 - standart work
     testNumber++;
@@ -12,34 +20,88 @@ int testCases(char * name){
 
     //T2 - standart work for register_on_begin_callback()
     testNumber++;
-    register_on_begin_callback([](){TEST_FILE = 2;});
+    register_on_begin_callback([](){
+        std::ofstream fout("TEST_FILE.txt"); 
+        fout << 2; 
+        fout.close(); 
+    });
     parse(text);
-    if (TEST_FILE != testNumber)
+    fin.open("TEST_FILE.txt");
+    if (fin.is_open())
+    {
+        while (getline(fin, line))
+            textFromFile = textFromFile + line;   
+    }
+    fin.close();  
+    if (textFromFile != "2")
         return testNumber;
     register_on_begin_callback([](){});
+    textFromFile = "";
 
     //T3 - standart work for register_on_end_callback()
     testNumber++;
-    register_on_end_callback([](){TEST_FILE = 3;});
+    register_on_end_callback([](){
+        std::ofstream fout("TEST_FILE.txt"); 
+        fout << 3; 
+        fout.close(); 
+    });
     parse(text);
-    if (TEST_FILE != testNumber)
+    fin.open("TEST_FILE.txt");
+    if (fin.is_open())
+    {
+        while (getline(fin, line)){
+            textFromFile = textFromFile + line;   
+        }
+    }
+    fin.close();  
+    if (textFromFile != "3")
         return testNumber;
     register_on_end_callback([](){});
-
+    textFromFile = "";
+    
     //T4 - standart work for register_on_number_callback()
     testNumber++;
-    register_on_number_callback([](const char * number){TEST_FILE = number[0];});
+    register_on_number_callback([](long long number){
+        std::ofstream fout("TEST_FILE.txt"); 
+        fout << number; 
+        fout.close(); 
+    });
     parse(text);
-    if (TEST_FILE != '4')
+    fin.open("TEST_FILE.txt");
+    if (fin.is_open())
+    {
+        while (getline(fin, line)){
+            textFromFile = textFromFile + line;   
+        }
+    }
+    fin.close();  
+    if (textFromFile != "4")
         return testNumber;
+    register_on_number_callback([](long long x){});
+    textFromFile = "";
 
     //T5 - standart work for register_on_string_callback()
     testNumber++;
-    register_on_string_callback([](const char * str){TEST_FILE = str[0];});
+    register_on_string_callback([](const char * str){
+        std::ofstream fout("TEST_FILE.txt"); 
+        fout << str; 
+        fout.close(); 
+    });
     parse(text);
-    if (TEST_FILE != '5')
+    fin.open("TEST_FILE.txt");
+    if (fin.is_open())
+    {
+        while (getline(fin, line)){
+            textFromFile = textFromFile + line;   
+        }
+    }
+    fin.close();  
+    if (textFromFile != "52d31231231231233!")
         return testNumber;
+    register_on_string_callback([](const char * x){});
+    textFromFile = "";
 
+    remove( "TEST_FILE.txt" );
     return 0;
 }
 
