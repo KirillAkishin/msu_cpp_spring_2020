@@ -93,4 +93,5 @@ void parse(const char * text){
         }
     }
     onEnd();
+    delete word;
 }
