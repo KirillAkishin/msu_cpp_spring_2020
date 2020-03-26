@@ -1,15 +1,36 @@
 #ifndef ALLOCATOR_H
 #define ALLOCATOR_H
 
-using borderCallback = void (*)();
-using onNumberCallback = void (*)(long long);
-using onStringCallback = void (*)(const char *);
+class matrixRow
+{
+private:
+    int* row;
+    int sizeOfRow;
+public:
+    matrixRow();
+    matrixRow(int* row, int sizeOfRow);
+    int& operator[](int i);
+};
 
-void register_on_begin_callback(borderCallback);
-void register_on_end_callback(borderCallback);
-void register_on_number_callback(onNumberCallback);
-void register_on_string_callback(onStringCallback);
-
-void parse(const char *);
+class Matrix
+{
+private:
+    int rows;
+    int cols;
+    matrixRow row;
+    int * dataArray;
+public:
+    Matrix(int rows, int cols);
+    ~Matrix();
+    void zeros();
+    void ones();
+    void print();
+    int getRows() const;
+    int getColumns() const;
+    void operator*=(const int scalar);
+    matrixRow operator[](int idxOfRow);
+    bool operator==(const Matrix& other) const;
+    bool operator!=(const Matrix& other) const;
+};
 
 #endif
