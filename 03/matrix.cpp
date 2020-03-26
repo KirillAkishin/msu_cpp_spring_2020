@@ -89,14 +89,5 @@ bool Matrix::operator==(const Matrix& other) const
 }
 bool Matrix::operator!=(const Matrix& other) const
 {
-    if ((this->rows != other.getRows()) || (this->cols != other.getColumns()))
-        return true;
-    if (this == &other)
-        return false;
-    int size = rows * cols;
-    for (int i = 0; i < size; i++){
-        if (this->dataArray[i] != other.dataArray[i])
-            return true;
-    }
-    return false;
+    return !(*this == other);
 }
