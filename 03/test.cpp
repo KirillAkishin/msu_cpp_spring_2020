@@ -41,12 +41,26 @@ int testCases(char * name){
     if (!(m0 != m2) || !(m1 != m2))
         return testNumber;
 
-    //T6 - out_of_range
+    //T6 - out_of_range for Matrix
     testNumber++;
     bool ok = false;
     try
     {
-        m0[99][99];
+        m0[99][0];
+    }
+    catch (const std::out_of_range)    
+    { 
+        ok = true;
+    }
+    if (!ok)
+        return testNumber;
+
+    //T7 - out_of_range for matrixRow
+    testNumber++;
+    ok = false;
+    try
+    {
+        m0[0][99];
     }
     catch (const std::out_of_range)    
     { 
