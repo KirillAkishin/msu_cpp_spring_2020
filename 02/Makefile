@@ -1,5 +1,5 @@
 CC=g++
-CFLAGS=-Wall -std=c++14 -O2
+CFLAGS=-Wall -std=c++14 -O0
 NAME=libparser.a
 
 all: $(NAME)
@@ -11,7 +11,7 @@ parser.o: parser.cpp parser.h
 	$(CC) $(CFLAGS) -c parser.cpp
 
 clean:
-	rm -rf *.o $(NAME) test.exe TEST_FILE.txt
+	rm -rf *.o $(NAME) test.exe vgcheck.exe
 	
 test: $(NAME) test.exe
 	./test.exe $(NAME)
@@ -21,4 +21,7 @@ test.exe: test.o libparser.a
 
 test.o: test.cpp
 	$(CC) -c test.cpp
+
+vgcheck: $(NAME) test.exe
+	valgrind --tool=memcheck --leak-check=full -s ./test.exe $(NAME)
 	

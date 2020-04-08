@@ -3,8 +3,8 @@
 #include <string>
 #include <cstring>
 
-
 #include "parser.h"
+
 
 int testCases(char * name){
     int testNumber = 0;
