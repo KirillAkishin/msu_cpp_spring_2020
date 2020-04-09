@@ -1,14 +1,15 @@
 CC=g++
 CFLAGS=-Wall -std=c++14 -O2
-NAME=libmatrix.a
+PROJECT=matrix
+NAME=lib$(PROJECT).a
 
 all: $(NAME)
 
-$(NAME): matrix.o
-	ar rc libmatrix.a matrix.o
+$(NAME): $(PROJECT).o
+	ar rc $(NAME) $(PROJECT).o
 
-matrix.o: matrix.cpp matrix.h 
-	$(CC) $(CFLAGS) -c matrix.cpp
+$(PROJECT).o: $(PROJECT).cpp $(PROJECT).h 
+	$(CC) $(CFLAGS) -c $(PROJECT).cpp
 
 clean:
 	rm -rf *.o $(NAME) test.exe TEST_FILE.txt
@@ -16,9 +17,11 @@ clean:
 test: $(NAME) test.exe
 	./test.exe $(NAME)
 
-test.exe: test.o libmatrix.a
-	$(CC) -o test.exe test.o -L. -lmatrix
+test.exe: test.o $(NAME)
+	$(CC) -o test.exe test.o -L. -l$(PROJECT)
 
 test.o: test.cpp
 	$(CC) -c test.cpp
 	
+vgcheck: $(NAME) test.exe
+	valgrind --tool=memcheck --leak-check=full -s ./test.exe $(NAME)

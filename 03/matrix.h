@@ -4,29 +4,29 @@
 class matrixRow
 {
 private:
-    int* row;
+    size_t* row;
     int sizeOfRow;
 public:
     matrixRow();
-    matrixRow(int* row, int sizeOfRow);
-    int& operator[](int i);
+    matrixRow(size_t* row, int sizeOfRow);
+    size_t& operator[](int i);
 };
 
 class Matrix
 {
 private:
-    int rows;
-    int cols;
+    size_t rows;
+    size_t cols;
     matrixRow row;
-    int * dataArray;
+    size_t * dataArray;
 public:
-    Matrix(int rows, int cols);
+    Matrix(size_t rows, size_t cols);
     ~Matrix();
     void zeros();
     void ones();
     void print();
-    int getRows() const;
-    int getColumns() const;
+    size_t getRows() const;
+    size_t getColumns() const;
     void operator*=(const int scalar);
     matrixRow operator[](int idxOfRow);
     bool operator==(const Matrix& other) const;

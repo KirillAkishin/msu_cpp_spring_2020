@@ -4,12 +4,12 @@
 
 matrixRow::matrixRow(){}
 
-matrixRow::matrixRow(int* row, int sizeOfRow)
+matrixRow::matrixRow(size_t* row, int sizeOfRow)
 {
     this->sizeOfRow = sizeOfRow;
     this->row = row;
 }
-int& matrixRow::operator[](int i)
+size_t& matrixRow::operator[](int i)
 {
     if (i >= sizeOfRow)
         throw std::out_of_range("");
@@ -17,44 +17,44 @@ int& matrixRow::operator[](int i)
 }
 
 
-Matrix::Matrix(int rows, int cols)
+Matrix::Matrix(size_t rows, size_t cols)
 {
-    this->dataArray = new int[rows*cols];
+    this->dataArray = new size_t[rows*cols];
     this->rows = rows;
     this->cols = cols;
 }
 Matrix::~Matrix()
 {
-    delete dataArray;
+    delete [] dataArray;
 }
 void Matrix::zeros()
 {
-    int size = rows * cols;
-    for (int i = 0; i < size; i++){
-        this->dataArray[i] = 0;
+    size_t size = rows * cols;
+    for (size_t i = 0; i < size; i++){
+        dataArray[i] = 0;
     }
 }
 void Matrix::ones()
 {
-    int size = rows * cols;
-    for (int i = 0; i < size; i++){
-        this->dataArray[i] = 1;
+    size_t size = rows * cols;
+    for (size_t i = 0; i < size; i++){
+        dataArray[i] = 1;
     }
 }
 void Matrix::print()
 {
-    for (int j = 0; j < rows; j++){
-        for (int i = 0; i < cols; i++){
+    for (size_t j = 0; j < rows; j++){
+        for (size_t i = 0; i < cols; i++){
             std::cout << dataArray[i + j*cols] << " ";
         }
         std::cout << std::endl;
     }
 }
-int Matrix::getRows() const
+size_t Matrix::getRows() const
 {
     return rows;
 }
-int Matrix::getColumns() const
+size_t Matrix::getColumns() const
 {
     return cols;
 }
@@ -70,13 +70,13 @@ matrixRow Matrix::operator[](int idxOfRow)
 {
     if (idxOfRow >= rows)
         throw std::out_of_range("");
-    int* ptrToRow = dataArray + (idxOfRow*cols);
+    size_t* ptrToRow = dataArray + (idxOfRow*cols);
     this->row = matrixRow(ptrToRow,cols);
     return row;
 }
 bool Matrix::operator==(const Matrix& other) const
 {
-    if ((this->rows != other.getRows()) || (this->cols != other.getColumns()))
+    if ((rows != other.getRows()) || (cols != other.getColumns()))
         return false;
     if (this == &other)
         return true;
