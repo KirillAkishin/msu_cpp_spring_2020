@@ -5,11 +5,11 @@ class matrixRow
 {
 private:
     size_t* row;
-    int sizeOfRow;
+    size_t sizeOfRow;
 public:
     matrixRow();
-    matrixRow(size_t* row, int sizeOfRow);
-    size_t& operator[](int i);
+    matrixRow(size_t* row, size_t sizeOfRow);
+    size_t& operator[](size_t i);
 };
 
 class Matrix
@@ -28,7 +28,7 @@ public:
     size_t getRows() const;
     size_t getColumns() const;
     void operator*=(const int scalar);
-    matrixRow operator[](int idxOfRow);
+    matrixRow operator[](size_t idxOfRow);
     bool operator==(const Matrix& other) const;
     bool operator!=(const Matrix& other) const;
 };

@@ -4,12 +4,12 @@
 
 matrixRow::matrixRow(){}
 
-matrixRow::matrixRow(size_t* row, int sizeOfRow)
+matrixRow::matrixRow(size_t* row, size_t sizeOfRow)
 {
     this->sizeOfRow = sizeOfRow;
     this->row = row;
 }
-size_t& matrixRow::operator[](int i)
+size_t& matrixRow::operator[](size_t i)
 {
     if (i >= sizeOfRow)
         throw std::out_of_range("");
@@ -63,15 +63,15 @@ void Matrix::operator*=(const int scalar)
     int size = rows*cols;
     for (int i = 0; i < size; i++)
     {
-        this->dataArray[i] *= scalar;
+        dataArray[i] *= scalar;
     }
 }
-matrixRow Matrix::operator[](int idxOfRow)
+matrixRow Matrix::operator[](size_t idxOfRow)
 {
     if (idxOfRow >= rows)
         throw std::out_of_range("");
     size_t* ptrToRow = dataArray + (idxOfRow*cols);
-    this->row = matrixRow(ptrToRow,cols);
+    row = matrixRow(ptrToRow,cols);
     return row;
 }
 bool Matrix::operator==(const Matrix& other) const
@@ -82,7 +82,7 @@ bool Matrix::operator==(const Matrix& other) const
         return true;
     int size = rows * cols;
     for (int i = 0; i < size; i++){
-        if (this->dataArray[i] != other.dataArray[i])
+        if (dataArray[i] != other.dataArray[i])
             return false;
     }
     return true;
