@@ -3,11 +3,10 @@
 #include "matrix.h"
 
 matrixRow::matrixRow(){}
-
-matrixRow::matrixRow(size_t* row, size_t sizeOfRow)
+matrixRow::matrixRow(size_t* in_row, size_t sizeOfRow)
 {
     this->sizeOfRow = sizeOfRow;
-    this->row = row;
+    row = in_row;
 }
 size_t& matrixRow::operator[](size_t i)
 {
@@ -17,11 +16,11 @@ size_t& matrixRow::operator[](size_t i)
 }
 
 
-Matrix::Matrix(size_t rows, size_t cols)
+Matrix::Matrix(size_t in_rows, size_t in_cols)
 {
-    this->dataArray = new size_t[rows*cols];
-    this->rows = rows;
-    this->cols = cols;
+    this->dataArray = new size_t[in_rows*in_cols];
+    rows = in_rows;
+    cols = in_cols;
 }
 Matrix::~Matrix()
 {
@@ -60,8 +59,8 @@ size_t Matrix::getColumns() const
 }
 void Matrix::operator*=(const int scalar)
 {
-    int size = rows*cols;
-    for (int i = 0; i < size; i++)
+    size_t size = rows*cols;
+    for (size_t i = 0; i < size; i++)
     {
         dataArray[i] *= scalar;
     }
@@ -80,8 +79,8 @@ bool Matrix::operator==(const Matrix& other) const
         return false;
     if (this == &other)
         return true;
-    int size = rows * cols;
-    for (int i = 0; i < size; i++){
+    size_t size = rows * cols;
+    for (size_t i = 0; i < size; i++){
         if (dataArray[i] != other.dataArray[i])
             return false;
     }
