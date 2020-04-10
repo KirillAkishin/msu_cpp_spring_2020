@@ -9,7 +9,7 @@ private:
 public:
     matrixRow();
     matrixRow(size_t* row, size_t sizeOfRow);
-    size_t& operator[](size_t i);
+    size_t& operator[](size_t i) const;
 };
 
 class Matrix
@@ -17,18 +17,17 @@ class Matrix
 private:
     size_t rows;
     size_t cols;
-    matrixRow row;
     size_t * dataArray;
 public:
     Matrix(size_t rows, size_t cols);
     ~Matrix();
-    void zeros();
+    Matrix(Matrix const& copy);
     void ones();
     void print();
     size_t getRows() const;
     size_t getColumns() const;
-    void operator*=(const int scalar);
-    matrixRow operator[](size_t idxOfRow);
+    Matrix& operator*=(const int scalar);
+    const matrixRow operator[](size_t idxOfRow) const;
     bool operator==(const Matrix& other) const;
     bool operator!=(const Matrix& other) const;
 };
