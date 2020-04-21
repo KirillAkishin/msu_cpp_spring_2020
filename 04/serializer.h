@@ -35,15 +35,24 @@ private:
     template <class T>
     Error process(T val)
     {
-        out_ << val;
-        std::cout << val << '\n';
+        if (is_bool<T>::value) {
+            if (val) 
+            {
+                out_ << "true" << Separator;
+            } else 
+            {
+                out_ << "false" << Separator;
+            }
+        }
+        else {
+            out_ << val;
+        }
         return Error::NoError;
     }
 
     template <class T, class... Args>
     Error process(T val, Args... args)
     {
-        std::cout << val << '\n';
         if (is_bool<T>::value) {
             if (val) 
             {

@@ -1,27 +1,30 @@
 CC=g++
 CFLAGS=-Wall -std=c++14 -O2
 PROJECT=serializer
-NAME=lib$(PROJECT).a
+LIBNAME=lib$(PROJECT).a
 
-all: $(NAME)
+all: $(LIBNAME)
 
-$(NAME): $(PROJECT).o
-	ar rc $(NAME) $(PROJECT).o
+$(LIBNAME): serializer.o deserializer.o
+	ar rc $(LIBNAME) serializer.o deserializer.o
 
-$(PROJECT).o: $(PROJECT).cpp $(PROJECT).h 
-	$(CC) $(CFLAGS) -c $(PROJECT).cpp
+serializer.o: serializer.cpp serializer.h 
+	$(CC) $(CFLAGS) -c serializer.cpp
+
+deserializer.o: deserializer.cpp deserializer.h 
+	$(CC) $(CFLAGS) -c deserializer.cpp
 
 clean:
-	rm -rf *.o $(NAME) test.exe
+	rm -rf *.o $(LIBNAME) test.exe
 	
-test: $(NAME) test.exe
-	./test.exe $(NAME)
+test: $(LIBNAME) test.exe
+	./test.exe $(LIBNAME)
 
-test.exe: test.o $(NAME)
+test.exe: test.o $(LIBNAME)
 	$(CC) -o test.exe test.o -L. -l$(PROJECT)
 
 test.o: test.cpp
 	$(CC) -c test.cpp
 	
-vgcheck: $(NAME) test.exe
-	valgrind --tool=memcheck --leak-check=full -s ./test.exe $(NAME)
+vgcheck: $(LIBNAME) test.exe
+	valgrind --tool=memcheck --leak-check=full -s ./test.exe $(LIBNAME)

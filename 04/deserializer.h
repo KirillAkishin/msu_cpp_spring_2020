@@ -14,9 +14,7 @@ class Deserializer
     static constexpr char Separator = ' ';
 public:
     explicit Deserializer(std::istream& in)
-            : in_(in)
-        {
-        }
+            : in_(in) {}
 
     Error load(bool& value)
     {
@@ -27,8 +25,10 @@ public:
             value = true;
         else if (text == "false")
             value = false;
-        else
+        else{
             return Error::CorruptedArchive;
+        }
+
 
         return Error::NoError;
     }
@@ -37,6 +37,10 @@ public:
     {
         std::string text;
         in_ >> text;
+        if (text[0] == '-')
+        {
+            return Error::CorruptedArchive;
+        }
         try {
             value = stoull(text);
         }
