@@ -1,13 +1,12 @@
 // #pragma once
-#ifndef ALLOCATOR_H
-#define ALLOCATOR_H
-#include <iostream>
+#pragma once
 
-enum class Error
-{
-    NoError,
-    CorruptedArchive
-};
+#include <iostream>
+#include "errors.h"
+
+
+template <typename T>
+using is_bool = std::is_same<T, bool>;
 
 class Serializer
 {
@@ -34,22 +33,30 @@ public:
     
 private:
     template <class T>
-    Error process(T&& val)
+    Error process(T val)
     {
+        out_ << val;
+        std::cout << val << '\n';
         return Error::NoError;
     }
 
     template <class T, class... Args>
-    Error process(T&& val, Args&&... args)
+    Error process(T val, Args... args)
     {
-        // if val == bool{
-        //     std::cout << "it is bool" << '\n';
-        // }
-        out_ << val << Separator;
         std::cout << val << '\n';
+        if (is_bool<T>::value) {
+            if (val) 
+            {
+                out_ << "true" << Separator;
+            } else 
+            {
+                out_ << "false" << Separator;
+            }
+        }
+        else {
+            out_ << val << Separator;
+        }
         process(std::forward<Args>(args)...);
         return Error::NoError;
     }
 };
-
-#endif
