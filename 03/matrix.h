@@ -4,12 +4,12 @@
 class matrixRow
 {
 private:
-    size_t* row;
+    int* row;
     size_t sizeOfRow;
 public:
     matrixRow();
-    matrixRow(size_t* row, size_t sizeOfRow);
-    size_t& operator[](size_t i) const;
+    matrixRow(int* row, size_t sizeOfRow);
+    int& operator[](size_t i) const;
 };
 
 class Matrix
@@ -17,7 +17,7 @@ class Matrix
 private:
     size_t rows;
     size_t cols;
-    size_t * dataArray;
+    int * dataArray;
 public:
     Matrix(size_t rows, size_t cols);
     ~Matrix();

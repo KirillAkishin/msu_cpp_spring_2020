@@ -3,12 +3,12 @@
 #include "matrix.h"
 
 matrixRow::matrixRow(){}
-matrixRow::matrixRow(size_t* in_row, size_t sizeOfRow)
+matrixRow::matrixRow(int* in_row, size_t sizeOfRow)
 {
     this->sizeOfRow = sizeOfRow;
     row = in_row;
 }
-size_t& matrixRow::operator[](size_t i) const
+int& matrixRow::operator[](size_t i) const
 {
     if (i >= sizeOfRow)
         throw std::out_of_range("");
@@ -18,7 +18,7 @@ size_t& matrixRow::operator[](size_t i) const
 
 Matrix::Matrix(size_t in_rows, size_t in_cols)
 {
-    this->dataArray = new size_t[in_rows*in_cols];
+    this->dataArray = new int[in_rows*in_cols];
     rows = in_rows;
     cols = in_cols;
 }
@@ -27,7 +27,7 @@ Matrix::~Matrix()
     delete [] dataArray;
 }
 Matrix::Matrix(Matrix const& copy)
-  : rows(copy.rows), cols(copy.cols), dataArray(new size_t[copy.rows * copy.cols]) 
+  : rows(copy.rows), cols(copy.cols), dataArray(new int[copy.rows * copy.cols]) 
 {
     size_t size = rows*cols;
     for (size_t i = 0; i < size; i++){
@@ -72,7 +72,7 @@ const matrixRow Matrix::operator[](size_t idxOfRow) const
 {
     if (idxOfRow >= rows)
         throw std::out_of_range("");
-    size_t* ptrToRow = dataArray + (idxOfRow*cols);
+    int* ptrToRow = dataArray + (idxOfRow*cols);
     return matrixRow(ptrToRow,cols);
 }
 bool Matrix::operator==(const Matrix& other) const

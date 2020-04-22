@@ -1,5 +1,4 @@
 #include <iostream>
-
 #include "matrix.h"
 
 
@@ -34,6 +33,7 @@ int testCases(char * name){
     m0 *= 3;
     if ((m0[0][0] != 3) || (m0[1][2] != 42*3))
         return testNumber;
+    // ctM *= 3;
 
     //T4 - operator==
     testNumber++;
