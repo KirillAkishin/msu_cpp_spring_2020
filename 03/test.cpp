@@ -3,20 +3,23 @@
 
 
 int testCases(char * name){
-    Matrix m0(2,3);
+    Matrix m0(4,5);
     Matrix m1(4,5);
     Matrix m2(4,5);
+    Matrix m3(2,3);
+    const Matrix cm(4,5);
     m0.ones();
     m1.ones();
     m2.ones();
-    const Matrix ctM = m2;
+    m3.ones();
+    cm.ones();
     int testNumber = 0;
 
     //T1 - getRows(), getColumns()
     testNumber++;
-    if ((m0.getRows() != 2) || (m1.getColumns() != 5))
+    if ((m0.getRows() != 4) || (m0.getColumns() != 5))
         return testNumber;
-    if ((ctM.getRows() != 4) || (ctM.getColumns() != 5))
+    if ((cm.getRows() != 4) || (cm.getColumns() != 5))
         return testNumber;
 
     //T2 - operator[][]
@@ -25,7 +28,9 @@ int testCases(char * name){
     int temp = m0[1][2];
     if (temp != 42)
         return testNumber;
-    if (ctM[0][0] != m2[0][0])
+    cm[1][2] = 42;
+    temp = cm[1][2];
+    if (temp != 42)
         return testNumber;
 
     //T3 - operator*=
@@ -33,21 +38,23 @@ int testCases(char * name){
     m0 *= 3;
     if ((m0[0][0] != 3) || (m0[1][2] != 42*3))
         return testNumber;
-    // ctM *= 3;
+    cm *= 3;
+    if ((cm[0][0] != 3) || (cm[1][2] != 42*3))
+        return testNumber;
 
     //T4 - operator==
     testNumber++;
     if (!(m1 == m2) || !(m1 == m1))
         return testNumber;
-    if (!(ctM == m2) || !(ctM == ctM))
+    if (!(cm == m0) || !(cm == cm))
         return testNumber;
 
     //T5 - operator!=
     testNumber++;
-    m1[3][4] = 5;
-    if (!(m0 != m2) || !(m1 != m2))
+    m1[0][1] = 24;
+    if (!(m1 != m2) || !(m2 != m3))
         return testNumber;
-    if (!(m0 != ctM) || !(m1 != ctM))
+    if (!(m1 != cm) || !(cm != m3))
         return testNumber;
 
     //T6 - out_of_range for Matrix
@@ -65,7 +72,7 @@ int testCases(char * name){
         return testNumber;
     try
     {
-        ctM[99][0];
+        cm[99][0];
     }
     catch (const std::out_of_range)    
     { 
@@ -89,7 +96,7 @@ int testCases(char * name){
         return testNumber;
     try
     {
-        ctM[0][99];
+        cm[0][99];
     }
     catch (const std::out_of_range)    
     { 

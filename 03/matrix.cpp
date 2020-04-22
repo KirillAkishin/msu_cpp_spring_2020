@@ -35,14 +35,14 @@ Matrix::Matrix(Matrix const& copy)
     }
 
 }
-void Matrix::ones()
+void Matrix::ones() const
 {
     size_t size = rows * cols;
     for (size_t i = 0; i < size; i++){
         dataArray[i] = 1;
     }
 }
-void Matrix::print()
+void Matrix::print() const
 {
     for (size_t j = 0; j < rows; j++){
         for (size_t i = 0; i < cols; i++){
@@ -68,6 +68,24 @@ Matrix& Matrix::operator*=(const int scalar)
     }
     return *this;
 }
+const Matrix Matrix::operator*=(const int scalar) const
+{
+    size_t size = rows*cols;
+    for (size_t i = 0; i < size; i++)
+    {
+        dataArray[i] *= scalar;
+    }
+    return *this;
+}
+// {
+//     Matrix tempMatrix(rows, cols);
+//     size_t size = rows*cols;
+//     for (size_t i = 0; i < size; i++)
+//     {
+//         tempMatrix.dataArray[i] = dataArray[i] * scalar;
+//     }
+//     return tempMatrix;
+// }
 const matrixRow Matrix::operator[](size_t idxOfRow) const
 {
     if (idxOfRow >= rows)
