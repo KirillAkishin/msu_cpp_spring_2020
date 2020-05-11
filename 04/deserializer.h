@@ -44,7 +44,10 @@ public:
         try {
             value = stoull(text);
         }
-        catch(...){
+        catch(std::invalid_argument& e){
+            return Error::CorruptedArchive;
+        }
+        catch(std::out_of_range& e){
             return Error::CorruptedArchive;
         }
         return Error::NoError;

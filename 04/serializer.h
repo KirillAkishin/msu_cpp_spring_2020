@@ -26,16 +26,16 @@ public:
     }
 
     template <class... ArgsT>
-    Error operator()(ArgsT... args)
+    Error operator()(ArgsT&& ... args)
     {
-        return process(args...);
+        return process(std::forward<ArgsT>(args)...);
     }
     
 private:
     template <class T>
-    Error process(T val)
+    Error process(T& val)
     {
-        if (is_bool<T>::value) {
+        if constexpr (is_bool<T>::value) {
             if (val) 
             {
                 out_ << "true" << Separator;
@@ -51,9 +51,9 @@ private:
     }
 
     template <class T, class... Args>
-    Error process(T val, Args... args)
+    Error process(T& val, Args&& ... args)
     {
-        if (is_bool<T>::value) {
+        if constexpr (is_bool<T>::value) {
             if (val) 
             {
                 out_ << "true" << Separator;
