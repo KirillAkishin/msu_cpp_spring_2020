@@ -56,34 +56,30 @@ public:
     template <class T>
     Error load(T& object)
     {
-        // std::cout << "load" << std::endl;
         return object.deserialize(*this);
     }
 
     template <class... ArgsT>
-    Error operator()(ArgsT&... args)
+    Error operator()(ArgsT&&... args)
     {
-        // std::cout << "operator()" << std::endl;
-        return process(args...);
+        return process(std::forward<ArgsT>(args)...);
     }
 
 private:
     template <class T>
     Error process(T& val)
     {
-        // std::cout << "process_finish" << std::endl;
         return load(val);
     }
 
     template <class T, class... Args>
-    Error process(T& val, Args&... args)
+    Error process(T& val, Args&& ... args)
     {
-        // std::cout << "process; val=" << val << std::endl;
         Error err = load(val);
         if (err != Error::NoError){
             return err;
         }
-        return process(std::forward<Args&>(args)...);
+        return process(std::forward<Args>(args)...);
     }
 };
 
