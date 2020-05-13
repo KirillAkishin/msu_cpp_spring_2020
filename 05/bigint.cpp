@@ -349,7 +349,6 @@ BigInt operator-(const BigInt &bint_1, const BigInt &bint_2)
         else
             r = sub(bint_2, bint_1, true);
     }
-
     return r;
 }
 
