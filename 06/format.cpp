@@ -4,8 +4,6 @@
 #include <cctype>
 #include <exception>
 
-#include "format.h"
-
 
 template<class T>
 void collect_args(std::vector<std::string>& arr, const T& arg)
@@ -29,7 +27,6 @@ std::string format(const char* str)
 {
 	return str;
 }
-
 
 template<class... ArgsT>
 std::string format(const char* str, const ArgsT&... args)

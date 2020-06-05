@@ -3,7 +3,7 @@
 #include <sstream>
 #include <vector>
 
-#include "format.h"
+#include "format.cpp"
 
 
 #define checkEqual(x, y) \
@@ -44,7 +44,6 @@ std::vector<tcase> testCases =
         []() { checkEqual(format("{0}", Test()), "test"); },
         []() { checkEqual(format("{0}", const_cast<Test&>(test)), "test"); },
         []() { checkEqual(format("{0}", test), "test"); },
-        []() { checkEqual(format("{1} aaa {0}{2} {1}", 1, test, "test1"), "test2 test3 test4 test5"); },
 
         []() { checkThrow(format("{", 1)); },
         []() { checkThrow(format("{0", 1)); },

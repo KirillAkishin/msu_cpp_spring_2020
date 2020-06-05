@@ -5,8 +5,11 @@ LIBNAME=lib$(PROJECT).a
 
 all: $(LIBNAME)
 
-$(LIBNAME): format.h  
-	ar rc $(LIBNAME) format.h 
+$(LIBNAME): $(PROJECT).o  
+	ar rc $(LIBNAME) $(PROJECT).o
+
+$(PROJECT).o: $(PROJECT).cpp 
+	$(CC) $(CFLAGS) -c $(PROJECT).cpp
 
 clean:
 	rm -rf *.o $(LIBNAME) test.exe
