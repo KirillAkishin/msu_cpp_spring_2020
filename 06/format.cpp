@@ -4,67 +4,60 @@
 #include <cctype>
 #include <exception>
 
+#include "format.h"
+ 
 
-template<class T>
-void collect_args(std::vector<std::string>& arr, const T& arg)
+std::string format(const std::string& str)
 {
-	std::stringstream stream;
-	stream << arg;
-	arr.push_back(stream.str());
+    return str;
 }
 
-template<class T, class... ArgsT>
-void collect_args(std::vector<std::string>& arr, const T& arg, const ArgsT&... args)
+std::string format(const std::string& str, const std::vector<std::string>& arr)
 {
-	std::stringstream stream;
-	stream << arg;
-	arr.push_back(stream.str());
-
-	collect_args(arr, args...);
-}
-
-std::string format(const char* str)
-{
-	return str;
-}
-
-template<class... ArgsT>
-std::string format(const char* str, const ArgsT&... args)
-{
-	std::vector<std::string> arr;
-	collect_args(arr, args...);
-
-	std::stringstream stream;
-
-	for (; *str; str++)
-	{
-		if (*str != '{')
-		{
-			if (*str != '}') stream << *str;
-			else throw std::runtime_error("extra close brace");
-		}
-		else
-		{
-			str++;
-
-			if (std::isdigit(*str))
-			{
-				uint8_t index = *str - '0';
-				for (str++; std::isdigit(*str); str++)
-					index = 10*index + (*str - '0');
-
-				if (*str == '}')
-				{
-					if (index >= arr.size())
-						throw std::runtime_error("invalid argument");
-
-					stream << arr[index];
-				}
-				else throw std::runtime_error("missing close brace");
-			}
-			else throw std::runtime_error("missing argument index");
-		}
-	}
-
-	return stream.str();
+    std::string result, buffer;
+    size_t n;
+    char c;
+    bool cnd = false, last;
+    for (size_t i = 0; i <= str.size(); ++i)
+    {
+        last = (i == str.size());
+        c = str[i];
+        if (cnd)
+        {
+            if (isdigit(c))
+                buffer += c;
+            else
+            {
+                if (c == '}')
+                    cnd = false;
+                else
+                    throw std::runtime_error("error");
+                n = 0;
+                if (!buffer.empty())
+                    n = atoi(buffer.c_str());
+                if (n >= 0 && n < arr.size())
+                    result += arr[n];
+                else
+                    throw std::runtime_error("error");
+                buffer.clear();
+            }
+        }
+        else
+        {
+            if (c == '{')
+            {
+                cnd = true;
+            }
+            else if (c == '}')
+            {
+                throw std::runtime_error("error");
+            }
+            else
+            {
+                if (!last)
+                    result += c;
+            }
+        }
+    }
+    return result;
 }

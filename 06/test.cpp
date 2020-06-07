@@ -3,7 +3,7 @@
 #include <sstream>
 #include <vector>
 
-#include "format.cpp"
+#include "format.h"
 
 
 #define checkEqual(x, y) \
@@ -57,7 +57,7 @@ std::vector<tcase> testCases =
      };
 
 int main(int argc, char* argv[]){
-    if (argc != 2){
+    if (argc != 1){
         printf("test.exe run incorrectly\n");
         return 1;
     }

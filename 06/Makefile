@@ -8,19 +8,19 @@ all: $(LIBNAME)
 $(LIBNAME): $(PROJECT).o  
 	ar rc $(LIBNAME) $(PROJECT).o
 
-$(PROJECT).o: $(PROJECT).cpp 
-	$(CC) $(CFLAGS) -c $(PROJECT).cpp
+$(PROJECT).o: $(PROJECT).cpp $(PROJECT).h
+	$(CC) $(CFLAGS) -c $(PROJECT).cpp 
 
 clean:
 	rm -rf *.o $(LIBNAME) test.exe
 	
 test: $(LIBNAME) test.exe
-	./test.exe $(LIBNAME)
+	./test.exe 
 
-test.exe: test.o $(LIBNAME)
-	$(CC) -o test.exe test.o -L -l$(PROJECT)
+test.exe: test.o $(PROJECT).o 
+	$(CC) -o test.exe test.o $(PROJECT).o
 
-test.o: test.cpp
+test.o: test.cpp $(PROJECT).h
 	$(CC) -c test.cpp
 	
 vgcheck: $(LIBNAME) test.exe
